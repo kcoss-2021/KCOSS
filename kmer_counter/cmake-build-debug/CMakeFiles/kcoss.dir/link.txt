@@ -1,0 +1,1 @@
+/usr/bin/c++   -march=native -mcx16 -g   CMakeFiles/kcoss.dir/Counter.cpp.o CMakeFiles/kcoss.dir/count_15to32.cpp.o CMakeFiles/kcoss.dir/count_33to64.cpp.o CMakeFiles/kcoss.dir/counter_less_than_14.cpp.o CMakeFiles/kcoss.dir/main.cpp.o CMakeFiles/kcoss.dir/xxhash.c.o  -o kcoss  -pthread 
