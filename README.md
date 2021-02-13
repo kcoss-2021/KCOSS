@@ -1,5 +1,7 @@
 # KCOSS
-A k-mer frequency statistics software
+A fast and space-saving multi-threaded k-mer frequency statistics algorithm
 
-# Installation
-KCOSS ： [Link](./kmer_counter/README.md)
+# Installation & Usage
+KCOSS      ： [Link](/kmer_counter/README.md)
+KCOSS-dump ： [Link](/kmer_dump/README.md)
+
