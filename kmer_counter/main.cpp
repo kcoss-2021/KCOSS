@@ -156,13 +156,13 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-		throw runtime_error("k值范围0<k<64");
+		throw runtime_error("k value 0<k<64");
 	}
 	auto* thread_pool = new ThreadPool_stable<char**>([&](char** reads_address) { counter->count(reads_address); }, core_num);
 	FILE* fp;
 	if ((fp = fopen(path.c_str(), "r+")) == NULL) //判断文件是否存在或可读
 	{
-		throw runtime_error("文件不存在或者没有读权限\n");
+		throw runtime_error("The file does not exist or has no read permission\n");
 	}
 	char s[1024] = { '\0' };
 	char str_end[1024] = { '\0' };
