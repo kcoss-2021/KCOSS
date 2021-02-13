@@ -19,4 +19,6 @@ make
 
 ## Usage
 
+```bash
 Example: ./kmer_dump 32 360 out_file
+```
