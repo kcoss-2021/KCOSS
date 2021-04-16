@@ -18,7 +18,7 @@ void counter_less_than_14::count(char** reads_address)
 		for (size_t i = 0,len= reads.length() - (k - 1); i < len; i++)
 		{
 			kmer = reads.substr(i, k);
-			if (!find_N(kmer))
+			if (!find_N(kmer))a
 			{
 				kmers_bit_tmp = TCGA2int_(kmer);
 				root_table[kmers_bit_tmp]++;

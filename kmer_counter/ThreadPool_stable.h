@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <thread>
+#include <functional>
 #include "concurrentqueue.h"
 
 using namespace std;
