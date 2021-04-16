@@ -1,4 +1,6 @@
 #pragma once
+#include <cstring>
+
 inline char** mularr_char(int m, int n) //使用一位数组模拟二维数组，m行n列，储存空间连续
 {
 	char** arr = new char* [m]; //开辟行
@@ -30,4 +32,11 @@ inline int find_table_size(unsigned long long int size)
         }
     }
     return left;
+}
+
+inline void rtrim(char *_src) {
+    size_t _r_pos = strlen(_src) - 1;
+    for (size_t i = _r_pos; i <= _r_pos && isspace(_src[i]); --i) {
+        _src[i] = 0;
+    }
 }

@@ -34,7 +34,13 @@ public:
 		k = exe_arg.k;
 		array_m = exe_arg.m;
 		filename = exe_arg.filename;
-		column = 1 + (int)ceil((79 + k) / 16.0);
+        // batch line = nL + k - 1.
+        // for 32 < k <= 64,
+        // batch line <= 192.
+        // 1 + floor((nL + k - 1) / 16) <= 1 + floor(192 / 16) = 13 -> 16 (cache alignment)
+        // column = 1 + (int) ((80 + k - 1 + 15) / 16);
+        column = 16;
+		// column = 1 + (int)ceil((79 + k) / 16.0);
 		get_end_2k_2 = ~(~(static_cast<__uint128_t>(0)) << (2 * k - 2));
 
 		//cout_kall = 0;

@@ -1,3 +1,0 @@
-/tmp/tmp.cAnwWoLnKa/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/tmp/tmp.cAnwWoLnKa/cmake-build-debug/CMakeFiles/edit_cache.dir
-/tmp/tmp.cAnwWoLnKa/cmake-build-debug/CMakeFiles/kmer_dump.dir

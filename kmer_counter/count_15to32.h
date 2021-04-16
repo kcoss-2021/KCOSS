@@ -39,7 +39,12 @@ public:
 		k = exe_arg.k;
 		array_m = exe_arg.m;
 		filename = exe_arg.filename;
-		column = 1 + (int)ceil((79 + k) / 16.0);
+		// batch line = nL + k - 1.
+		// for k <= 32,
+		// nL <= 80, k - 1 <= 31.
+		// 1 + floor((nL + k - 1) / 16) <= 1 + floor(111 / 16) = 8 -> 8 (byte alignment)
+        // column = 1 + (int) ((80 + k - 1 + 15) / 16);
+		column = 8;
 		get_end_2k_2 = ~(~0ull << (2 * k - 2));
 
 		block_sum = 0;

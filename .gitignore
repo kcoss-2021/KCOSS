@@ -1,0 +1,5 @@
+.idea/
+kmer_counter/.idea/
+kmer_counter/cmake-build-debug/
+kmer_dump/.idea/
+kmer_dump/cmake-build-debug/
