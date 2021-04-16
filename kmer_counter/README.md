@@ -20,7 +20,7 @@ make
 ## Usage
 
 ```bash
-Example: ./kcoss -k 32 -i "../test_file/test_data.fa" -t 48 -m 360 -o out_file -n 3000000000 -d 268697600
+Example: ./kcoss -k 32 -i "../test_file/test_data.fa" -t 48 -m 360 -o out_file -n 3000000000 -d 163969647
 ```
 
 Parameters:
