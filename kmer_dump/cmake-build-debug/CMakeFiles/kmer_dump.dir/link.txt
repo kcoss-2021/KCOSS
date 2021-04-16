@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wall -Wextra -march=native -mcx16 -g   CMakeFiles/kmer_dump.dir/main.cpp.o CMakeFiles/kmer_dump.dir/xxhash.c.o  -o kmer_dump  -pthread 
