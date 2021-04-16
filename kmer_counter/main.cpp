@@ -265,7 +265,6 @@ int main(int argc, char *argv[]) {
                 l -= n_l;
             }
         }
-        printf("");
     }
 
 
