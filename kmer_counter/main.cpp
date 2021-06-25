@@ -15,327 +15,265 @@
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
-    // for (size_t i = 0; i < argc; i++)
-    // {
-    // 	cout << argv[i] << endl;
-    // }
-    int opt = 0;
-    int arg_count = 0;
-    while ((opt = getopt(argc, argv, "k:i:t:m:o:n:d:vh")) != -1) {
-        switch (opt) {
-            case 'k':
-                arg_count++;
-                exe_arg.k = atoi(optarg);
-                break;
-            case 'i':
-                arg_count++;
-                exe_arg.path = optarg;
-                break;
-            case 't':
-                arg_count++;
-                exe_arg.core_num = atoi(optarg);
-                break;
-            case 'm':
-                arg_count++;
-                exe_arg.m = atoi(optarg);
-                break;
-            case 'o':
-                arg_count++;
-                exe_arg.filename = optarg;
-                break;
-            case 'n':
-                arg_count++;
-                exe_arg.bloomfilter_size = atoll(optarg); //3000000000
-                break;
-            case 'd':
-                arg_count++;
-                exe_arg.hashtable_size = atoll(optarg); //268697600
-                break;
-            case 'v':
-                printf("KCOSS - 1.0.0\n");
-                exit(-1);
-                break;
-            case 'h':
-                printf("Example:./kcoss -k 32 -i \"../test_file/test_data.fa\" -t 48 -m 360 -o out_file -n 3000000000 -d 268697600\n");
-                printf("Parameters:\n");
-                printf("  -k <value>\t\t\tk-mer length (k from 1 to 64)\n");
-                printf("  -i <string>\t\t\tinput file path\n");
-                printf("  -t <value>\t\t\tnumber of threads\n");
-                printf("  -m <value>\t\t\tsizes of block (m >1)\n");
-                printf("  -o <string>\t\t\toutput file path\n");
-                printf("  -n <value>\t\t\tsizes of bloomfilter(Number of k-mer species)\n");
-                printf("  -d <value>\t\t\tsizes of hash table(Number of k-mer species,Non-single occurrence)\n");
-                exit(-1);
-                break;
-            default:
-                printf("Unknown command");
-                exit(-1);
-                break;
-        }
-    }
+int main(int argc, char* argv[])
+{
+	// for (size_t i = 0; i < argc; i++)
+	// {
+	// 	cout << argv[i] << endl;
+	// }
+	int opt = 0;
+	int arg_count = 0;
+	while ((opt = getopt(argc, argv, "k:i:t:m:o:n:d:vh")) != -1)
+	{
+		switch (opt)
+		{
+		case 'k':
+			arg_count++;
+			exe_arg.k = atoi(optarg);
+			break;
+		case 'i':
+			arg_count++;
+			exe_arg.path = optarg;
+			break;
+		case 't':
+			arg_count++;
+			exe_arg.core_num = atoi(optarg);
+			break;
+		case 'm':
+			arg_count++;
+			exe_arg.m = atoi(optarg);
+			exe_arg.m = 512;
+			break;
+		case 'o':
+			arg_count++;
+			exe_arg.filename = optarg;
+			break;
+		case 'n':
+			arg_count++;
+			exe_arg.bloomfilter_size = atoll(optarg); //3000000000
+			break;
+		case 'd':
+			arg_count++;
+			exe_arg.hashtable_size = atoll(optarg); //268697600
+			break;
+		case 'v':
+			printf("KCOSS - 1.0.0\n");
+			exit(-1);
+			break;
+		case 'h':
+			printf(
+				"Example:./kcoss -k 32 -i \"../test_file/test_data.fa\" -t 48 -m 360 -o out_file -n 3000000000 -d 268697600\n");
+			printf("Parameters:\n");
+			printf("  -k <value>\t\t\tk-mer length (k from 1 to 64)\n");
+			printf("  -i <string>\t\t\tinput file path\n");
+			printf("  -t <value>\t\t\tnumber of threads\n");
+			printf("  -m <value>\t\t\tsizes of block (m >1)\n");
+			printf("  -o <string>\t\t\toutput file path\n");
+			printf("  -n <value>\t\t\tsizes of bloomfilter(Number of k-mer species)\n");
+			printf("  -d <value>\t\t\tsizes of hash table(Number of k-mer species,Non-single occurrence)\n");
+			exit(-1);
+			break;
+		default:
+			printf("Unknown command");
+			exit(-1);
+			break;
+		}
+	}
 
-    if (arg_count < 5) {
-        // 帮助信息
-        printf("Too few arguments\n");
-        printf("Example:./kcoss -k 32 -i \"../test_file/test_data.fa\" -t 48 -m 360 -o out_file -n 3000000000 -d 268697600\n");
-        printf("Parameters:\n");
-        printf("  -k <value>\t\t\tk-mer length (k from 1 to 64)\n");
-        printf("  -i <string>\t\t\tinput file path\n");
-        printf("  -t <value>\t\t\tnumber of threads\n");
-        printf("  -m <value>\t\t\tsizes of block (m >1)\n");
-        printf("  -o <string>\t\t\toutput file path\n");
-        printf("  -n <value>\t\t\tsizes of bloomfilter(Number of k-mer species)\n");
-        printf("  -d <value>\t\t\tsizes of hash table(Number of k-mer species,Non-single occurrence)\n");
-        exit(-1);
-    }
+	if (arg_count < 5)
+	{
+		// 帮助信息
+		printf("Too few arguments\n");
+		printf(
+			"Example:./kcoss -k 32 -i \"../test_file/test_data.fa\" -t 48 -m 360 -o out_file -n 3000000000 -d 268697600\n");
+		printf("Parameters:\n");
+		printf("  -k <value>\t\t\tk-mer length (k from 1 to 64)\n");
+		printf("  -i <string>\t\t\tinput file path\n");
+		printf("  -t <value>\t\t\tnumber of threads\n");
+		printf("  -m <value>\t\t\tsizes of block (m >1)\n");
+		printf("  -o <string>\t\t\toutput file path\n");
+		printf("  -n <value>\t\t\tsizes of bloomfilter(Number of k-mer species)\n");
+		printf("  -d <value>\t\t\tsizes of hash table(Number of k-mer species,Non-single occurrence)\n");
+		exit(-1);
+	}
 
-    ////auto tp1 = std::chrono::steady_clock::now();
-    //const int k = atoi(argv[1]);
-    //const string path = argv[2];
-    //const int core_num = atoi(argv[3]);
-    //const int m = atoi(argv[4]); //定义表大小
-    //const string filename = argv[5];
+	////auto tp1 = std::chrono::steady_clock::now();
+	//const int k = atoi(argv[1]);
+	//const string path = argv[2];
+	//const int core_num = atoi(argv[3]);
+	//const int m = atoi(argv[4]); //定义表大小
+	//const string filename = argv[5];
 
-    const size_t k = exe_arg.k;
-    const string path = exe_arg.path;
-    const int core_num = exe_arg.core_num;
-    const int m = exe_arg.m;
-    const string filename = exe_arg.filename;
+	const size_t k = exe_arg.k;
+	const string path = exe_arg.path;
+	const int core_num = exe_arg.core_num;
+	const int m = exe_arg.m;
+	const string filename = exe_arg.filename;
 
-    if (k > 14 && arg_count < 7) {
-        printf("Parameters: \n");
-        printf("-n <value> is necessary when k > 14.\n");
-        printf("-d <value> sizes of hash table(Number of k-mer species,Non-single occurrence)  is necessary when k > 14.\n");
-        exit(-1);
-    }
+	if (k > 14 && arg_count < 7)
+	{
+		printf("Parameters: \n");
+		printf("-n <value> is necessary when k > 14.\n");
+		printf(
+			"-d <value> sizes of hash table(Number of k-mer species,Non-single occurrence)  is necessary when k > 14.\n");
+		exit(-1);
+	}
 
-    const uint_64 bloomfilter_size = exe_arg.bloomfilter_size;
-    const uint_64 hashtable_size = exe_arg.hashtable_size;
+	const uint_64 bloomfilter_size = exe_arg.bloomfilter_size;
+	const uint_64 hashtable_size = exe_arg.hashtable_size;
 
-    //cout << "k值" << k << "   path" << path << "   核心数量" << core_num << endl;
-    //printf("k值:%d  path:\"%s\"  线程数:%d  块大小:%d条 输出文件名:\"%s\"\n", k, path.c_str(), core_num, m, filename.c_str());
-    ConcurrentBloomfilter *bloom_filter = nullptr;
-    write_thread *t_write = nullptr;
-    moodycamel::ConcurrentQueue<c_reads> creads_list;
-    moodycamel::ConcurrentQueue<c_reads> creads_list_addr;
-    moodycamel::ConcurrentQueue<char **> address_array; //用于回收数组
-    Counter *counter;
+	//cout << "k值" << k << "   path" << path << "   核心数量" << core_num << endl;
+	//printf("k值:%d  path:\"%s\"  线程数:%d  块大小:%d条 输出文件名:\"%s\"\n", k, path.c_str(), core_num, m, filename.c_str());
+	ConcurrentBloomfilter* bloom_filter = nullptr;
+	write_thread* t_write = nullptr;
+	moodycamel::ConcurrentQueue<c_reads> creads_list;      //creads存储队列 存放非空块
+	moodycamel::ConcurrentQueue<c_reads> creads_list_addr; //creads回收队列 存放空块
+	moodycamel::ConcurrentQueue<char*> address_array; //用于回收数组
+	Counter* counter;
 
-    /***************************************************************************************************/
-    // 新方法
-    if (0 < k && k <= 14) {
-        // 存放4^k个数 的数组长度
-        atomic_uint *const root_table = new atomic_uint[(int) pow(4, k)];
-        counter = new counter_less_than_14(root_table, &address_array);
-    } else if (15 <= k && k <= 32) {
-        bloom_filter = new ConcurrentBloomfilter(bloomfilter_size / 2ull); // p = 0.005 m/n = 16  3000000000/2
-        t_write = new write_thread(&creads_list, &creads_list_addr);
-        int ans = find_table_size(hashtable_size) - 1;
-        HashTable1 *hash_table_1 = new HashTable1(1u << ans); //1u << 28
-        cuckoo_hash_map *hash_table_2 = new cuckoo_hash_map(1u << find_table_size(hashtable_size - pow(2, ans)),
-                                                            std_XXHash()); //小表可扩容 //1u << 18
-        //cout << "hashtable1:" << ans << "  " <<(1u << ans) << endl;
-        //cout << "hashtable2:" << find_table_size(hashtable_size - pow(2, ans)) << "  " << (1u << find_table_size(hashtable_size - pow(2, ans))) << endl;
-        counter = new count_15to32(bloom_filter, hash_table_1, hash_table_2, &creads_list, &creads_list_addr,
-                                   &address_array);
-    } else if (33 <= k && k <= 64) {
-        bloom_filter = new ConcurrentBloomfilter(
-                bloomfilter_size / 2ull); // p = 0.005 m/n = 16  n=32    3000000000/2 估计数除2
-        t_write = new write_thread(&creads_list, &creads_list_addr);
-        int ans = find_table_size(hashtable_size) - 1;
-        HashTable2 *hash_table_1 = new HashTable2(1u << ans); //1u << 28
-        cuckoo_hash_map2 *hash_table_2 = new cuckoo_hash_map2(
-                1u << find_table_size(hashtable_size - pow(2, ans))); //小表可扩容 //1u << 18
-        //cout << "hashtable1:" << ans << "  " << (1u << ans) << endl;
-        //cout << "hashtable2:" << find_table_size(hashtable_size - pow(2, ans)) << "  " << (1u << find_table_size(hashtable_size - pow(2, ans))) << endl;
-        counter = new count_33to64(bloom_filter, hash_table_1, hash_table_2, &creads_list, &creads_list_addr,
-                                   &address_array);
-    } else {
-        throw runtime_error("k value 0<k<64");
-    }
-    auto *thread_pool = new ThreadPool_stable<char **>([&](char **reads_address) { counter->count(reads_address); },
-                                                       core_num);
-    FILE *fp;
-    if ((fp = fopen(path.c_str(), "r+")) == NULL) //判断文件是否存在或可读
-    {
-        throw runtime_error("The file does not exist or has no read permission\n");
-    }
+	/***************************************************************************************************/
+	// 新方法
+	if (0 < k && k <= 14)
+	{
+		// 存放4^k个数 的数组长度
+		atomic_uint* const root_table = new atomic_uint[(int)pow(4, k)];
+		counter = new counter_less_than_14(root_table, &address_array);
+	}
+	else if (15 <= k && k <= 32)
+	{
+		bloom_filter = new ConcurrentBloomfilter(bloomfilter_size / 2ull); // p = 0.005 m/n = 16  3000000000/2
+		t_write = new write_thread(&creads_list, &creads_list_addr);
+		int ans = find_table_size(hashtable_size) - 1;
+		HashTable1* hash_table_1 = new HashTable1(
+			1u << ans);                                                                   //1u << 28
+		cuckoo_hash_map* hash_table_2 = new cuckoo_hash_map(1u << find_table_size(hashtable_size - pow(2, ans)),
+			std_XXHash()); //小表可扩容 //1u << 18
+		//cout << "hashtable1:" << ans << "  " <<(1u << ans) << endl;
+		//cout << "hashtable2:" << find_table_size(hashtable_size - pow(2, ans)) << "  " << (1u << find_table_size(hashtable_size - pow(2, ans))) << endl;
+		counter =
+			new count_15to32(bloom_filter, hash_table_1, hash_table_2, &creads_list, &creads_list_addr, &address_array);
+	}
+	else if (33 <= k && k <= 64)
+	{
+		bloom_filter = new ConcurrentBloomfilter(
+			bloomfilter_size / 2ull); // p = 0.005 m/n = 16  n=32    3000000000/2 估计数除2
+		t_write = new write_thread(&creads_list, &creads_list_addr);
+		int ans = find_table_size(hashtable_size) - 1;
+		HashTable2* hash_table_1 = new HashTable2(
+			1u << ans);                                                       //1u << 28
+		cuckoo_hash_map2* hash_table_2 = new cuckoo_hash_map2(
+			1u << find_table_size(hashtable_size - pow(2, ans))); //小表可扩容 //1u << 18
 
-    // fasta file: L chars per line
-    // batch line: nL + K - 1 (n is the minimum integer that satisfies nL >= K)
-    // we found nL <= 2K,
-    // therefore nL + K - 1 <= 3K - 1 <= 192.
-    const int str_len = 192;
+		//cout << "hashtable1:" << ans << "  " << (1u << ans) << endl;
+		//cout << "hashtable2:" << find_table_size(hashtable_size - pow(2, ans)) << "  " << (1u << find_table_size(hashtable_size - pow(2, ans))) << endl;
+		counter =
+			new count_33to64(bloom_filter, hash_table_1, hash_table_2, &creads_list, &creads_list_addr, &address_array);
+	}
+	else
+	{
+		throw runtime_error("k value 0<k<64");
+	}
+	auto* thread_pool = new ThreadPool_stable<char*>([&](char* reads_address)
+		{ counter->count(reads_address); },
+		core_num);
+	/************************************************************************************************************************************************************************************************************/
+	// 如果k大于14需要用到creads则新建一片内存空间
+	if (15 <= k && k <= 64)
+	{
+		/*初试化creads内存块*/
+		int creads_blocks_num = core_num * 96; //内存块个数
+//        int creads_blockSize = 1024; //每个内存块由多少个uint32组成 4096字节/4字节 后期应该弄小一点,到时候调调
+		int creads_blockSize = m; // 每个内存块由512个uint32组成
+		uint_32* creads_bigBlock = new uint_32[creads_blocks_num * creads_blockSize](); //整一大块连续的内存空间 加()进行初始化
 
-    char **batch = nullptr;
-    int i = -1;
-    // to be batch[i + 1]
-    char cur[192] = {0};
-    // j = strlen(cur)
-    size_t j = 0;
-    // pre = batch[i]
-    char *pre = nullptr;
-    // pre still want l bytes.
-    size_t l = 0;
+		/*把creads内存块放进队列*/
+		for (int i = 0; i < creads_blocks_num; i++)
+		{
+			creads_list_addr.enqueue(&creads_bigBlock[i * creads_blockSize]);
+		}
+	}
+	/************************************************************************************************************************************************************************************************************/
 
-    char buf[192];
+	/*打开文件 mmap映射*/
+	int file = open(path.c_str(), O_RDONLY);
+	if (file < 0)
+	{
+		throw runtime_error("The file does not exist or has no read permission\n");
+	}
 
-    // try to reuse the allocated batch buffer first.
-    if (!address_array.try_dequeue(batch)) {
-        batch = mularr_char(m, str_len);
-    }
+	long long fileSize = lseek(file, 0, SEEK_END); //总文件大小
+	char* mapped = (char*)mmap(NULL, fileSize, PROT_READ, MAP_PRIVATE, file, 0);
+	if (mapped == MAP_FAILED)
+	{
+		printf("source data mmap fail\n");
+	}
+	//printf(mapped);
+	close(file);
 
-    for (; fgets(buf, sizeof(buf), fp);) {
-        if (buf[0] == '>') {
-            // commit current batch line only if it is not shorter than a k-mer
-            if (j >= k) {
-                // try to give l bytes to previous line.
-                if (l > 0) {
-                    strncat(pre, cur, l);
-                    if (l <= j) {
-                        l = 0;
-                    } else {
-                        l -= j;
-                    }
-                }
+	/*初试化内存块*/
+	int blocks = core_num * 12;
+	int blockSize = 4096; // 16k一个块
+//    blockSize++; //+1留给'\0'
+	char* bigBlock = (char*)malloc(sizeof(char) * blockSize * blocks);
 
-                if (++i >= m) {
-                    // submit and reset the batch buffer.
-                    thread_pool->executor(batch);
-                    if (!address_array.try_dequeue(batch)) {
-                        batch = mularr_char(m, str_len);
-                    }
-                    i = 0;
-                }
-                strcpy(batch[i], cur);
-            }
+	/*把内存块放进队列*/
+	for (int i = 0; i < blocks; i++)
+	{
+		bigBlock[(i + 1) * blockSize - 1] = '\0';
+		address_array.enqueue(&bigBlock[i * blockSize]);
+	}
 
-            memset(cur, 0, sizeof(cur));
-            j = 0;
-            // previous line does not want k - 1 bytes any more.
-            pre = nullptr;
-            l = 0;
-            continue;
-        }
+	/*读取序列文件放入内存块并放入线程池*/
+	char* tmp = nullptr;
+	bool firstRead = true;
+	uint64_t cursor = 0;
+	while (true)
+	{
+		if (address_array.try_dequeue(tmp))
+		{
+			if (cursor + blockSize - 1 - k > fileSize)
+			{ //最后一块
+				if (firstRead)
+				{
+					memcpy(tmp, mapped, fileSize);
+					thread_pool->executor(tmp);
+					break;
+				}
+				else
+				{
+					memset(tmp, '\0', blockSize);
+					memcpy(tmp, mapped + cursor - k, fileSize - cursor + k - 1);
+					//cout << "fileSize - cursor + k : " << fileSize - cursor + k << endl;
+					//cout << "tmp:" << tmp << endl;
+					thread_pool->executor(tmp);
+					break;
+				}
+			}
+			else
+			{
+				if (firstRead)
+				{
+					memcpy(tmp, mapped + cursor, blockSize - 1);
+					cursor += blockSize - 1;
+					firstRead = false;
+				}
+				else
+				{
+					memcpy(tmp, mapped + cursor - k, blockSize - 1);
+					cursor += blockSize - 1 - k;
+				}
+				//cout << "tmp:" << tmp << endl;
+				thread_pool->executor(tmp);
+			}
+		}
+//        else {
+//            cout << " 生产者需要更多内存块 " << endl;
+//        }
+	}
 
-        rtrim(buf);
-
-        // try to give l bytes to previous line.
-        if (l > 0) {
-            strncat(pre, buf, l);
-            size_t n_l = strlen(buf);
-            if (l <= n_l) {
-                l = 0;
-            } else {
-                l -= n_l;
-            }
-        }
-
-        if (j < k) {
-            strcat(cur, buf);
-            j += strlen(buf);
-            continue;
-        }
-
-        // j >= k
-        // start a new batch line, while current line still want k - 1 bytes.
-        if (++i >= m) {
-            // submit and reset the batch buffer.
-            thread_pool->executor(batch);
-            if (!address_array.try_dequeue(batch)) {
-                batch = mularr_char(m, str_len);
-            }
-            i = 0;
-        }
-        strcpy(batch[i], cur);
-        strcpy(cur, buf);
-        j = strlen(buf);
-        pre = batch[i];
-        l = k - 1;
-
-        // it is a new line for pre.
-        // try to give l bytes to previous line.
-        if (l > 0) {
-            strncat(pre, buf, l);
-            size_t n_l = strlen(buf);
-            if (l <= n_l) {
-                l = 0;
-            } else {
-                l -= n_l;
-            }
-        }
-    }
-
-
-    // commit the last batch line (if not less than k).
-    // the previous line should be handled above.
-    if (j >= k) {
-        // try to give l bytes to previous line.
-        if (l > 0) {
-            strncat(pre, cur, l);
-            if (l <= j) {
-                l = 0;
-            } else {
-                l -= j;
-            }
-        }
-        if (++i >= m) {
-            thread_pool->executor(batch);
-            if (!address_array.try_dequeue(batch)) {
-                batch = mularr_char(m, str_len);
-            }
-            i = 0;
-        }
-        strcpy(batch[i], cur);
-    }
-
-    // submit the last batch.
-    thread_pool->executor(batch);
-
-//	char s[1024] = { '\0' };
-//	char str_end[1024] = { '\0' };
-//	// const int str_len = 80 + k; // fna文件默认长度一行80个碱基
-//
-//	// read: L per line
-//	// batch line: nL + K - 1 (n is the minimum integer that satisfies nL >= K)
-//	// we found nL <= 2K,
-//	// therefore nL + K - 1 <= 3K - 1 <= 192.
-//	const int str_len = 192;
-//
-//	//char* item;
-//	char** fna; //存放reads的二维数组(模拟)
-//	int sum = 0;
-//	int arry_flag = 0; //判断是否数组使用情况
-//	fna = mularr_char(m, str_len); //初始化数组
-//	while (fgets(s, 1024, fp))
-//	{
-//		if (s[0] == '>')
-//		{
-//			str_end[0] = '\0';
-//		}
-//		else
-//		{
-//			s[strlen(s) - 1] = '\0';
-//			strcat(str_end, s); //拼接上一段
-//			if (arry_flag > (m - 1)) //判断数组是否已满
-//			{
-//				thread_pool->executor(fna); //将数组地址存入线程池，并重置数组
-//				if (!address_array.try_dequeue(fna)) //1:item非空
-//				{
-//					fna = mularr_char(m, str_len);
-//				}
-//				arry_flag = 0; //重置为0
-//			}
-//			strcpy(fna[arry_flag], str_end); //将reads放入新空间
-//			arry_flag++;
-//			memcpy(str_end, &s[strlen(s) - (k - 1)], k);
-//		}
-//	}
-//	thread_pool->executor(fna); //将最后一个数组地址存入线程池
-
+	/************************************************************************************************************************************************************************************************************/
 	delete thread_pool;
-	fclose(fp);
+	// fclose(fp);
 
 	delete bloom_filter;
 	//cout << "释放布隆过滤器" << endl;

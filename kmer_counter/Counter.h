@@ -2,7 +2,7 @@
 #define Counter_H
 #include "definition.h"
 
-typedef moodycamel::ConcurrentQueue<char**> Concurrent_Queue_char;
+typedef moodycamel::ConcurrentQueue<char*> Concurrent_Queue_char;
 typedef moodycamel::ConcurrentQueue<c_reads> Concurrent_Queue_c_reads;
 
 class Counter
@@ -10,8 +10,8 @@ class Counter
 public:
 	int find_N(const string& str); // str含N检测
 	str2bin_return find_N2(const string& str); // str含N检测
-	virtual void count(char** reads_address) = 0;
-	void release_fna_block(Concurrent_Queue_char* address_array, Concurrent_Queue_c_reads* creads_list_addr);
+	virtual void count(char* reads_address) = 0;
+//	void release_fna_block(Concurrent_Queue_char* address_array, Concurrent_Queue_c_reads* creads_list_addr);
 	virtual void print() = 0;
 	uint_64 TCGA2int(const string& str);
 	uint_64 TCGA2intV2(uint_64& prev, char ch);
@@ -143,21 +143,21 @@ inline str2bin_return Counter::find_N2(const string& str) // str含N检测
 	return str_retrun;
 }
 
-inline void Counter::release_fna_block(Concurrent_Queue_char* address_array, Concurrent_Queue_c_reads* creads_list_addr)
-{
-	char** fna; //存放reads的二维数组(模拟)
-	while (address_array->try_dequeue(fna))
-	{
-		delete[] fna[0];
-		delete[] fna;
-	}
-	c_reads item;
-	while (creads_list_addr->try_dequeue(item))
-	{
-		delete[] item[0];
-		delete[] item;
-	}
-}
+// inline void Counter::release_fna_block(Concurrent_Queue_char* address_array, Concurrent_Queue_c_reads* creads_list_addr)
+// {
+// 	char** fna; //存放reads的二维数组(模拟)
+// 	while (address_array->try_dequeue(fna))
+// 	{
+// 		delete[] fna[0];
+// 		delete[] fna;
+// 	}
+// 	c_reads item;
+// 	while (creads_list_addr->try_dequeue(item))
+// 	{
+// 		delete[] item[0];
+// 		delete[] item;
+// 	}
+// }
 
 
 // inline void Counter::count(const string& reads) {}

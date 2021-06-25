@@ -50,7 +50,7 @@ struct root_hash_node_14
 //	vector<uint_32> cell;
 //	int end_point = 0; // 记录unsinged int中的空间剩余
 //};
-typedef uint_32** c_reads;
+typedef uint_32* c_reads;
 
 /****************************************************************************************/
 struct str2bin_return

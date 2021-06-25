@@ -1,6 +1,6 @@
 ﻿#include "counter_less_than_14.h"
 
-void counter_less_than_14::count(char** reads_address)
+void counter_less_than_14::count(char* reads_address)
 {
 	//uint_32 kmers_bit_tmp;
 	int arr_num = 0;
@@ -11,84 +11,152 @@ void counter_less_than_14::count(char** reads_address)
 	//uint_32 kmer_tmp; //存放拼接好的kmer
 	//uint_32 new_bit; //用于存放刚拿到的bit
 
-	while ((arr_num < array_max) && (strlen(reads_address[arr_num]) != 0))
-	{
-		/**************************************************************************************************
-		reads = string(reads_address[arr_num]);
-		for (size_t i = 0,len= reads.length() - (k - 1); i < len; i++)
-		{
-			kmer = reads.substr(i, k);
-			if (!find_N(kmer))a
-			{
-				kmers_bit_tmp = TCGA2int_(kmer);
-				root_table[kmers_bit_tmp]++;
-				//cout_all++;
-			}
-		}
-		**************************************************************************************************/
-		reads = string(reads_address[arr_num]);
-		for (size_t i = 0, len = reads.length() - (k - 1); i < len; i++)
-		{
-			str2bin_return tmp = find_N2(reads.substr(i, k));
-			if (!tmp.flag)
-			{
-				root_table[tmp.bin]++;
-				//cout_all++;
-			}
-		}
-		/**************************************************************************************************
-		
-		k_flag = 0;
-		kmer_tmp = 0;
-		for (size_t i = 0,len = strlen(reads_address[arr_num]); i < len; i++) //处理一条reads
-		{
-			switch (reads_address[arr_num][i])
-			{
-			case 'A':
-			case 'a':
-				new_bit = 0b00;
-				break;
-			case 'C':
-			case 'c':
-				new_bit = 0b01;
-				break;
-			case 'G':
-			case 'g':
-				new_bit = 0b10;
-				break;
-			case 'T':
-			case 't':
-				new_bit = 0b11;
-				break;
-			default:
-				k_flag = -1;
-				break;
-			}
-			if (k_flag == -1) //遇到奇奇怪怪的字符，重置
-			{
-				k_flag = 0;
-				kmer_tmp = 0;
-			}
-			else if (k_flag < (k - 1)) //未拼接完整
-			{
-				kmer_tmp = (kmer_tmp << 2) + new_bit;
-				k_flag++;
-			}
-			else //拼接完整！！！！！！！！！！！！！！！！！
-			{
-				kmer_tmp = (kmer_tmp << 2) + new_bit;
-				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				root_table[kmer_tmp]++;
-				//cout_all++;
-				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				kmer_tmp = kmer_tmp & get_end_2k_2;
-			}
-		}
-		**************************************************************************************************/
-		//清空该条
-		reads_address[arr_num][0] = '\0';
-		arr_num++;
-	}
+//	char ** reads_address;//临时用一下等下要改
+
+    bool flag = false; //标志是否跨行了
+    for (int i = 0; i < k; i++) { //检测是否跨行
+        if (reads_address[i] == '\n') {
+            flag = true;
+        }
+    }
+
+    int length = strlen(reads_address);
+    int i = 0;
+    if (!flag) { //如果没有跨行
+        i = 1;
+    }
+//        cout << reads_address[i] << endl;
+    int k_flag = 0;           //用于判断kmer是否完整
+    uint_32 new_bit = 0;   //用于存放刚拿到的bit
+    uint_32 kmer_tmp = 0;  //存放拼接好的kmer
+    for (; i < length; i++) {
+        switch (reads_address[i]) {
+            case 'A':
+            case 'a':
+                new_bit = 0b00;
+                //new_char = "A";
+                break;
+            case 'C':
+            case 'c':
+                new_bit = 0b01;
+                //new_char = "C";
+                break;
+            case 'G':
+            case 'g':
+                new_bit = 0b10;
+                //new_char = "G";
+                break;
+            case 'T':
+            case 't':
+                new_bit = 0b11;
+                //new_char = "T";
+                break;
+            case '\n':
+                continue;
+            default:
+//                cout << (int)reads_address[j] << endl;
+                k_flag = -1;
+                //i = i + k;
+                break;
+        }
+        if (k_flag == -1) {
+            k_flag = 0;
+            kmer_tmp = 0;
+        } else if (k_flag < (k - 1)) {
+            kmer_tmp = (kmer_tmp << 2) + new_bit;
+            //kmer_tmp_char = kmer_tmp_char + new_char;
+            k_flag++;
+        } else //拼接完整！！！！！！！！！！！！！！！！！
+        {
+            kmer_tmp = (kmer_tmp << 2) + new_bit;
+
+            /********************************************************************************************************************************************************************************************/
+
+            root_table[kmer_tmp]++;
+
+            /********************************************************************************************************************************************************************************************/
+            kmer_tmp = kmer_tmp & get_end_2k_2;
+        }
+    }
+
+//	while ((arr_num < array_max) && (strlen(reads_address[arr_num]) != 0))
+//	{
+//		/**************************************************************************************************
+//		reads = string(reads_address[arr_num]);
+//		for (size_t i = 0,len= reads.length() - (k - 1); i < len; i++)
+//		{
+//			kmer = reads.substr(i, k);
+//			if (!find_N(kmer))a
+//			{
+//				kmers_bit_tmp = TCGA2int_(kmer);
+//				root_table[kmers_bit_tmp]++;
+//				//cout_all++;
+//			}
+//		}
+//		**************************************************************************************************/
+//		reads = string(reads_address[arr_num]);
+//		for (size_t i = 0, len = reads.length() - (k - 1); i < len; i++)
+//		{
+//			str2bin_return tmp = find_N2(reads.substr(i, k));
+//			if (!tmp.flag)
+//			{
+//				root_table[tmp.bin]++;
+//				//cout_all++;
+//			}
+//		}
+//		/**************************************************************************************************
+//
+//		k_flag = 0;
+//		kmer_tmp = 0;
+//		for (size_t i = 0,len = strlen(reads_address[arr_num]); i < len; i++) //处理一条reads
+//		{
+//			switch (reads_address[arr_num][i])
+//			{
+//			case 'A':
+//			case 'a':
+//				new_bit = 0b00;
+//				break;
+//			case 'C':
+//			case 'c':
+//				new_bit = 0b01;
+//				break;
+//			case 'G':
+//			case 'g':
+//				new_bit = 0b10;
+//				break;
+//			case 'T':
+//			case 't':
+//				new_bit = 0b11;
+//				break;
+//			default:
+//				k_flag = -1;
+//				break;
+//			}
+//			if (k_flag == -1) //遇到奇奇怪怪的字符，重置
+//			{
+//				k_flag = 0;
+//				kmer_tmp = 0;
+//			}
+//			else if (k_flag < (k - 1)) //未拼接完整
+//			{
+//				kmer_tmp = (kmer_tmp << 2) + new_bit;
+//				k_flag++;
+//			}
+//			else //拼接完整！！！！！！！！！！！！！！！！！
+//			{
+//				kmer_tmp = (kmer_tmp << 2) + new_bit;
+//				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//				root_table[kmer_tmp]++;
+//				//cout_all++;
+//				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//				kmer_tmp = kmer_tmp & get_end_2k_2;
+//			}
+//		}
+//		**************************************************************************************************/
+//		//清空该条
+//		reads_address[arr_num][0] = '\0';
+//		arr_num++;
+//	}
 	address_array->enqueue(reads_address);
 }
 

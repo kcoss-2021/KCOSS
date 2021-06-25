@@ -1,179 +1,186 @@
 ﻿#include "count_15to32.h"
 #include "function_def2.h"
 
-void count_15to32::count(char** reads_address)
+void count_15to32::count(char* reads_address)
 {
 	int arr_num = 0;
 
-	bool succeed; //判断哈希表是否插入成功
-	auto update_function = [](uint_32& num) { ++num; };//布谷鸟的更新函数
-	bool cut_flag; // 重叠群切割标志
+	bool succeed;                                        //判断哈希表是否插入成功
+	auto update_function = [](uint_32& num)
+	{ ++num; }; //布谷鸟的更新函数
+	bool cut_flag = 0;                                    // 重叠群切割标志
 
-	uint_32** creads_set;          //存放creads的二维数组(模拟)
-	int creads_len = 0;              //临时存放creads的长度
-	uint_32 creads_end;           // 记录unsinged int中的空间剩余 1-32
-	int creads_set_num = 0;     //判断creads_set数组使用情况
-	uint_32 cell = 0;
+	uint_32* creads_Block;     //存放creads的内存块
 
-	if (!creads_list_addr->try_dequeue(creads_set)) //1:item非空
+	//记录当前使用的creads块标志块的位置
+	//内存块的第0块存放当前数组的使用块数量
+	//(creads_end << 16) + creads_len;
+	//creadsbiao标志块前16位存放creads_end，后16位存放creads块的使用个数（第0块记录值-标志块位置+1）
+	int creads_flag_loc = 0;   // 记录当前使用的creads块标志块的位置
+	uint_32 creads_end;        // 记录unsinged int中的空间剩余 0-16个碱基
+
+	uint_32 reads_len = 0; //当reads的长度超过指定阈值时进行截断
+
+
+	while (!creads_list_addr->try_dequeue(creads_Block))
 	{
-		creads_set = mularr_uint_32(array_m, column);
+//        cout << " try直到获取到内存空间! " << endl;
+	} //try直到获取到内存空间
+	creads_Block[0] = 0; //内存块标记为空
+	/********************************************************************************************************************************************************************************************/
+	bool flag = false; //标志是否跨行了
+	for (int i = 0; i < k; i++)
+	{ //检测是否跨行
+		if (reads_address[i] == '\n')
+		{
+			flag = true;
+		}
 	}
 
-	while ((arr_num < array_m) && (strlen(reads_address[arr_num]) != 0))
+	int length = strlen(reads_address);
+	int i = 0;
+	if (!flag)
+	{ //如果没有跨行
+		i = 1;
+	}
+
+	int k_flag = 0;           //用于判断kmer是否完整
+	uint_32 new_bit = 0;   //用于存放刚拿到的bit
+	uint_64 kmer_tmp = 0;  //存放拼接好的kmer
+	for (; i < length; i++)
 	{
-		int k_flag = 0; //用于判断kmer是否完整
-		uint_32 new_bit; //用于存放刚拿到的bit
-		//string new_char; //用于存放刚拿到的char
-		//string kmer_tmp_char; //存放拼接好的string 用于布隆过滤器
-		uint_64 kmer_tmp = 0; //存放拼接好的kmer
-
-		cut_flag = 0;// 重叠群切割标志
-
-		if (creads_len > 0)
+		switch (reads_address[i])
 		{
-			creads_set[creads_set_num][creads_len++] = cell;
-			creads_set[creads_set_num++][0] = (creads_end << 16) + creads_len;
-			creads_len = 0;
+		case 'A':
+		case 'a':
+			new_bit = 0b00;
+			//new_char = "A";
+			break;
+		case 'C':
+		case 'c':
+			new_bit = 0b01;
+			//new_char = "C";
+			break;
+		case 'G':
+		case 'g':
+			new_bit = 0b10;
+			//new_char = "G";
+			break;
+		case 'T':
+		case 't':
+			new_bit = 0b11;
+			//new_char = "T";
+			break;
+		case '\n':
+			continue;
+		default:
+			k_flag = -1;
+			reads_len = 0; //重置reads长度计数器
+			cut_flag = 0; // 重叠群不再连续
+			break;
 		}
-
-		for (size_t i = 0, len = strlen(reads_address[arr_num]); i < len; i++) //处理一条reads
+		if (k_flag == -1)
 		{
-			switch (reads_address[arr_num][i])
+			k_flag = 0;
+			kmer_tmp = 0;
+		}
+		else if (k_flag < (k - 1))
+		{
+			kmer_tmp = (kmer_tmp << 2) + new_bit;
+			//kmer_tmp_char = kmer_tmp_char + new_char;
+			k_flag++;
+		}
+		else //拼接完整！！！！！！！！！！！！！！！！！
+		{
+			kmer_tmp = (kmer_tmp << 2) + new_bit;
+			reads_len++;
+			if (reads_len > 120)
 			{
-			case 'A':
-			case 'a':
-				new_bit = 0b00;
-				//new_char = "A";
-				break;
-			case 'C':
-			case 'c':
-				new_bit = 0b01;
-				//new_char = "C";
-				break;
-			case 'G':
-			case 'g':
-				new_bit = 0b10;
-				//new_char = "G";
-				break;
-			case 'T':
-			case 't':
-				new_bit = 0b11;
-				//new_char = "T";
-				break;
-			default:
-				k_flag = -1;
-				break;
+				reads_len = 0; //重置reads长度计数器
+				cut_flag = 0;  // 重叠群不再连续
 			}
-			if (k_flag == -1) //遇到奇奇怪怪的字符，重置
+			/********************************************************************************************************************************************************************************************/
+
+			if (bloom_filter->try_insert(kmer_tmp)) // 0:出现过 1:第一次出现
 			{
-				k_flag = 0;
-				kmer_tmp = 0;
-				//kmer_tmp_char.clear();
-			}
-			else if (k_flag < (k - 1)) //未拼接完整
-			{
-				kmer_tmp = (kmer_tmp << 2) + new_bit;
-				//kmer_tmp_char = kmer_tmp_char + new_char;
-				k_flag++;
-			}
-			else //拼接完整！！！！！！！！！！！！！！！！！
-			{
-				kmer_tmp = (kmer_tmp << 2) + new_bit;
-				//kmer_tmp_char = kmer_tmp_char + new_char;
-				//cout << "kmer_tmp1:" << num2tcga(kmer_tmp,k) << endl;
-				///cout << "kmer_tmp2:" << kmer_tmp_char << endl;
-				/***********************************************************************************************************/
-				//cout_kall++;
-				if (bloom_filter->try_insert(kmer_tmp))//0:出现过 1:第一次出现
+				//第一次出现   继续拼接或者新建(新建时发现满了则提交后继续新建)
+				if (cut_flag == 1) // creads连续，继续拼接,临时变量未处理
 				{
-					//cout_k1++;
-					if (cut_flag != 0) //新建重叠群，并把原重叠群vector（如果非空）提交到写入线程
+					// 将kmer最后一个碱基添加到cell末尾
+					if (creads_end < 16)
 					{
-						// 将kmer最后一个碱基添加到cell末尾
-						if (creads_end < 16)
-						{
-							cell = (cell << 2) + (kmer_tmp & 0b11);
-							creads_end++;
-						}
-						else
-						{
-							creads_set[creads_set_num][creads_len++] = cell;
-							cell = kmer_tmp & 0b11;
-							creads_end = 1;
-						}
+						creads_Block[creads_Block[0]] = (creads_Block[creads_Block[0]] << 2) + (kmer_tmp & 0b11);
+						creads_end++;
 					}
 					else
 					{
-
-						if (creads_set_num > (array_m - 1)) //判断数组是否已满
-						{
-							creads_list->enqueue(creads_set); //将数组地址存入线程池
-							if (!creads_list_addr->try_dequeue(creads_set)) //1:item非空
-							{
-								creads_set = mularr_uint_32(array_m, column);
-							}
-							creads_set_num = 0; //重置为0
-						}
-
-						// 把kmer放入 vector中
-						if (k < 17)
-						{
-							cell = kmer_tmp;
-							creads_len = 1;
-							creads_end = k;
-						}
-						else
-						{
-							creads_set[creads_set_num][1] = kmer_tmp >> (2 * k - 32);//放入前半截
-							cell = get_end_n_bit(kmer_tmp, 2 * k - 32); //放入后半截
-							creads_len = 2;
-							creads_end = k - 16;
-						}
-						cut_flag = 1;
+						creads_Block[++creads_Block[0]] = kmer_tmp & 0b11;
+						creads_end = 1;
 					}
-
 				}
-				else
+				else // creads不再连续，将临时变量中的值处理然后新建
 				{
-					//非第一次出现
-					if (creads_len > 0)
+					// 结束上一个creads块，将标志块填充完整
+					if (creads_Block[0] > 0)
 					{
-						creads_set[creads_set_num][creads_len++] = cell;
-						creads_set[creads_set_num++][0] = (creads_end << 16) + creads_len;
-						creads_len = 0;
+						creads_Block[creads_flag_loc] = (creads_end << 16) + (creads_Block[0] - creads_flag_loc + 1);
 					}
-					//
-					//cout_k2++;
-					cut_flag = 0;
-					succeed = hash_table_1->upsert(kmer_tmp, 1);
-					if (!succeed)
+					// 检查空间是否足够，足够则继续使用当前块，不够则提交到写线程，同时更替新的内存块
+					if ((creads_Block[0] + column) > (array_m - 1))
 					{
-						hash_table_2->upsert(kmer_tmp, update_function, 1);
+						creads_list->enqueue(creads_Block); //将内存块址存入线程池
+						while (!creads_list_addr->try_dequeue(creads_Block))
+						{
+//                            cout << " try直到获取到内存空间! " << endl;
+						} //try直到获取到内存空间
+						creads_Block[0] = 0; //内存块标记为空
 					}
+					// 新建creads块
+					creads_flag_loc = creads_Block[0] + 1;     // 标志块的位置
+					creads_Block[0] = creads_Block[0] + 2;      // 内容块位置
+					if (k < 17)
+					{
+						creads_Block[creads_Block[0]] = kmer_tmp;  // 填充内容块
+						creads_end = k;
+					}
+					else
+					{
+						creads_Block[creads_Block[0]++] = kmer_tmp >> (2 * k - 32);//放入前半截
+						creads_Block[creads_Block[0]] = get_end_n_bit(kmer_tmp, 2 * k - 32); //放入后半截
+						creads_end = k - 16;
+					}
+					cut_flag = 1;
 				}
-				/**********************************************************************************************************/
-				kmer_tmp = kmer_tmp & get_end_2k_2;
-				//kmer_tmp_char = kmer_tmp_char.erase(0, 1);
 			}
+			else     // creads不再连续
+			{
+				//非第一次出现
+				//将存放在临时变量中的值放入creads_set，将新kmer放入哈希表中
+				//cout_k2++;
+				cut_flag = 0;
+				succeed = hash_table_1->upsert(kmer_tmp, 1);
+				if (!succeed)
+				{
+					hash_table_2->upsert(kmer_tmp, update_function, 1);
+				}
+			}
+
+			/********************************************************************************************************************************************************************************************/
+			kmer_tmp = kmer_tmp & get_end_2k_2;
 		}
-		//清空该条
-		reads_address[arr_num][0] = '\0';
-		arr_num++;
 	}
-	if (cut_flag == 0)
+	// 结束上一个creads块，将标志块填充完整
+	if (creads_Block[0] > 0)
 	{
-		if (creads_set[0][0] != 0)
-		{
-			creads_list->enqueue(creads_set); //将数组地址存入线程池
-		}
+		creads_Block[creads_flag_loc] = (creads_end << 16) + (creads_Block[0] - creads_flag_loc + 1);
+		creads_list->enqueue(creads_Block); //将内存块址存入线程池
 	}
 	else
 	{
-		creads_set[creads_set_num][creads_len++] = cell;
-		creads_set[creads_set_num++][0] = (creads_end << 16) + creads_len;
-		creads_list->enqueue(creads_set); //将数组地址存入线程池
+//        cout << "???" << endl;
+		creads_list_addr->enqueue(creads_Block);
 	}
+
 	address_array->enqueue(reads_address); //将数组回收
 }
 
@@ -211,5 +218,4 @@ void count_15to32::print()
 	}
 	munmap((void*)mapped, len);
 	close(hash_table_2_file);
-
 }
