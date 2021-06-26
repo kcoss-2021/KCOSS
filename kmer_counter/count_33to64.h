@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Counter.h"
-#include "ConcurrentBloomfilter.h"
+//#include "ConcurrentBloomfilter.h"
 #include <math.h>
 #include "HashTable2.h"
+#include "concurrent_bloom_filter.h"
+#include "xxh3.h"
 
 struct std_XXHash2 : std::hash<__uint128_t>
 {
@@ -20,7 +22,7 @@ typedef moodycamel::ConcurrentQueue<char*> Concurrent_Queue_char;
 class count_33to64 : public Counter
 {
  public:
-	count_33to64(ConcurrentBloomfilter* def_bloom_filter,
+	count_33to64(kcoss::MultipleConcurrentBloomFilter* def_bloom_filter,
 		HashTable2* hash_table_1,
 		cuckoo_hash_map2* hash_table_2,
 		Concurrent_Queue* creads_list,
@@ -57,7 +59,7 @@ class count_33to64 : public Counter
 	void print();
 
  private:
-	ConcurrentBloomfilter* bloom_filter;
+    kcoss::MultipleConcurrentBloomFilter* bloom_filter;
 	HashTable2* hash_table_1;//大表不扩容
 	cuckoo_hash_map2* hash_table_2; //小表可扩容
 	Concurrent_Queue* creads_list;

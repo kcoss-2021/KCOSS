@@ -6,6 +6,8 @@
 #include <string>
 #include <memory>
 
+#include <xxh3.h>
+
 class HashTable1 {
 public:
 	typedef uint64_t K;
@@ -41,7 +43,7 @@ private:
 
 public:
 	HashTable1(size_t arraySize) {
-		//assert(arraySize >= 1 && (arraySize & (arraySize - 1)) == 0);   // Must be a power of 2
+		assert(arraySize >= 1 && (arraySize & (arraySize - 1)) == 0);   // Must be a power of 2
 		m_arraySize = arraySize;
 		m_entries = new Entry[arraySize + 1];
 		m_entries[m_arraySize].key = NULL_KEY_FOR_ZERO_ENTRY;

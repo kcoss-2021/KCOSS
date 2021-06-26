@@ -13,16 +13,16 @@ inline char** mularr_char(int m, int n) //使用一位数组模拟二维数组，m行n列，储存
 	return arr;
 }
 
-inline int find_table_size(unsigned long long int size)
+inline uint64_t find_table_size(unsigned long long int size)
 {
-    int mid, left = 0, right = 64;
+    uint64_t mid, left = 0, right = 64;
     while (left <= right)
     {
         mid = (left + right) >> 1;
         //cout << mid << endl;
         //cout << "  " << right << endl;
         //cout << "  " << left << endl;
-        if (pow(2, mid) >= size)
+        if ((1ull << mid) >= size)
         {
             right = mid - 1;
         }

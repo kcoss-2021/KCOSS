@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "concurrentqueue.h"
+#include <concurrentqueue.h>
 #include "definition.h"
 
 using namespace std;
@@ -45,7 +45,6 @@ write_thread::write_thread(moodycamel::ConcurrentQueue<c_reads> *creads_list_def
                                  c_reads_file.write((char *) (item + 1), 4 * item[0]); // 将存储块除块头且有内容部分写盘 option_1
 
                                  creads_list_addr->enqueue(item);
-
 //                                 cout << " write! " << item[0] << endl;
                              }
                          }
