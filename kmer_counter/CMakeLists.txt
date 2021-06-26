@@ -12,6 +12,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 file(GLOB SOURCE ./*.h ./*.c ./*.cpp)
+file(GLOB_RECURSE SOURCE_INCLUDE ./include/*.h ./include/*.hh ./include/*.cc ./include/*.cpp)
+include_directories(./include)
+
 add_executable(kcoss ${SOURCE})
 
 # pthread

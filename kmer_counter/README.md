@@ -31,3 +31,4 @@ Parameters:
 - -o \<string\>			output file path
 - -n \<value\>			sizes of bloomfilter(Number of k-mer species)
 - -d \<value\>			sizes of hash table(Number of k-mer species,Non-single occurrence)
+- -y 			 			 using compact hash map (maximum frequency should not greater than 65535)

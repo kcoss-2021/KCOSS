@@ -101,7 +101,7 @@ void count_15to32::count(char* reads_address)
 			}
 			/********************************************************************************************************************************************************************************************/
 
-			if (bloom_filter->try_insert(kmer_tmp)) // 0:出现过 1:第一次出现
+			if (bloom_filter->test_set_64(kmer_tmp)) // 0:出现过 1:第一次出现
 			{
 				//第一次出现   继续拼接或者新建(新建时发现满了则提交后继续新建)
 				if (cut_flag == 1) // creads连续，继续拼接,临时变量未处理
@@ -191,13 +191,13 @@ void count_15to32::print()
 	//cout << "size 2 = " << hash_table_2->size() << endl;
 	//cout << "load factor 2 = " << hash_table_2->load_factor() << endl;
 
-	//cout_kall = cout_k1 + cout_k2;
-	//cout << "kmer总数：" << cout_kall << endl;
-	//cout << "单次kmer数量：" << cout_k1 << endl;
-	//cout << "非单次kmer数量：" << cout_k2 << endl;
+//	cout_kall = cout_k1 + cout_k2;
+//	cout << "kmer总数：" << cout_kall << endl;
+//	cout << "单次kmer数量：" << cout_k1 << endl;
+//	cout << "非单次kmer数量：" << cout_k2 << endl;
 
 	// 存放大表内容到硬盘
-	hash_table_1->save(filename);
+	hash_table_1->dump(filename);
 	delete hash_table_1;
 
 	int hash_table_2_file = open((filename + ".HT2").c_str(), O_RDWR | O_CREAT, 0664);

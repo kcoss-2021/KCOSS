@@ -24,8 +24,5 @@ private:
 	int array_max;
 	uint_64 get_end_2k_2;
     Concurrent_Queue_char14* address_array;
-	uint_32 TCGA2int_(const string& str);
-	//uint_32 TCGA2intV2_(uint_32& prev, char ch);
-	//atomic_ullong cout_all;
 };
 #endif

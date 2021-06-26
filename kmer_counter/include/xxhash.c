@@ -321,7 +321,7 @@ static xxh_u32 XXH32_round(xxh_u32 acc, xxh_u32 input)
      * (pragmas and attributes don't work for some resason) without globally
      * disabling SSE4.1.
      *
-     * The reason we want to avoid vectorization is because despite working on
+     * The reason we want to avoid vectorization is because despite running on
      * 4 integers at a time, there are multiple factors slowing XXH32 down on
      * SSE4:
      * - There's a ridiculous amount of lag from pmulld (10 cycles of latency on newer chips!)

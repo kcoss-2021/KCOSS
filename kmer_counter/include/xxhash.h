@@ -87,7 +87,7 @@ typedef enum { XXH_OK=0, XXH_ERROR } XXH_errorcode;
  ******************************/
 /** XXH_INLINE_ALL (and XXH_PRIVATE_API)
  *  This build macro includes xxhash functions in `static` mode
- *  in order to inline them, and remove their symbol from the public list.
+ *  in order to inline them, and test_unset their symbol from the public list.
  *  Inlining offers great performance improvement on small keys,
  *  and dramatic ones when length is expressed as a compile-time constant.
  *  See https://fastcompression.blogspot.com/2018/03/xxhash-for-small-keys-impressive-power.html .
@@ -239,7 +239,7 @@ XXH_PUBLIC_API XXH32_hash_t  XXH32_digest (const XXH32_state_t* statePtr);
  * The canonical representation settles this issue,
  * by mandating big-endian convention,
  * aka, the same convention as human-readable numbers (large digits first).
- * When writing hash values to storage, sending them over a network, or printing them,
+ * When running hash values to storage, sending them over a network, or printing them,
  * it's highly recommended to use the canonical representation,
  * to ensure portability across a wider range of systems, present and future.
  *
@@ -317,7 +317,7 @@ struct XXH32_state_s {
    XXH32_hash_t reserved;   /* never read nor write, might be removed in a future version */
 };   /* typedef'd to XXH32_state_t */
 
-#ifndef XXH_NO_LONG_LONG  /* remove 64-bit support */
+#ifndef XXH_NO_LONG_LONG  /* test_unset 64-bit support */
 struct XXH64_state_s {
    XXH64_hash_t total_len;
    XXH64_hash_t v1;

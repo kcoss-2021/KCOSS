@@ -18,8 +18,9 @@
 #include <fstream>
 #include <iostream>
 #include <mutex>
+#include <xxh3.h>
 #include <libcuckoo/cuckoohash_map.hh>
-#include "concurrentqueue.h"
+#include <concurrentqueue.h>
 #include "function_def.h"
 #define get_end_n_bit(x,n) ((x) & (~(~0ull << (n)))) //取x的末n位
 
@@ -34,6 +35,8 @@ struct
 	string path;
 	int core_num;
 	int m;
+	int passes = 1; // 默认不分趟
+	bool use_compact_hash_map = false; // 默认不用紧凑哈希表
 	string filename;
 	uint_64 bloomfilter_size;
 	uint_64 hashtable_size;

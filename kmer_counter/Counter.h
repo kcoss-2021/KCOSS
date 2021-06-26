@@ -5,6 +5,14 @@
 typedef moodycamel::ConcurrentQueue<char*> Concurrent_Queue_char;
 typedef moodycamel::ConcurrentQueue<c_reads> Concurrent_Queue_c_reads;
 
+struct std_XXHash : std::hash<uint_64>
+{
+    std::size_t operator()(const uint_64& t)
+    {
+        return XXH64(&t, 8, 0);
+    }
+};
+
 class Counter
 {
 public:
