@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="histo"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="histo">
+				<Option output="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/histo" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 histo"/>
+					<CompileFile command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="histo/fast">
+				<Option output="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/histo" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 histo/fast"/>
+					<CompileFile command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j256 -f &quot;/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/Cmdline.h">
+			<Option target="histo"/>
+		</Unit>
+		<Unit filename="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/ConcurrentBloomfilter.h">
+			<Option target="histo"/>
+		</Unit>
+		<Unit filename="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/File.h">
+			<Option target="histo"/>
+		</Unit>
+		<Unit filename="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/Histo.h">
+			<Option target="histo"/>
+		</Unit>
+		<Unit filename="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/Query.h">
+			<Option target="histo"/>
+		</Unit>
+		<Unit filename="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/ThreadPool_stable.h">
+			<Option target="histo"/>
+		</Unit>
+		<Unit filename="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/Tool.h">
+			<Option target="histo"/>
+		</Unit>
+		<Unit filename="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/concurrentqueue.h">
+			<Option target="histo"/>
+		</Unit>
+		<Unit filename="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/main.cpp">
+			<Option target="histo"/>
+		</Unit>
+		<Unit filename="/home/b8402/21_xiaoweihao/Clion/histo/tmp/tmp.Ibn4MmVqbw/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

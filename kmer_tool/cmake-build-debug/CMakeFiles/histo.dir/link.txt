@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/histo.dir/main.cpp.o  -o histo  -pthread 
