@@ -127,6 +127,11 @@ int main(int argc, char* argv[])
 	const int m = exe_arg.m;
 	const string filename = exe_arg.filename;
 
+	cout<<k<<endl;
+    fstream output = fstream(filename+".txt", ios::out | ios::binary);
+    output.write((char*)&k,4);
+    output.close();
+
 	if (k > 14 && arg_count < 7)
 	{
 		printf("Parameters: \n");
